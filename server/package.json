@@ -1,0 +1,26 @@
+{
+  "name": "s14990_tin",
+  "version": "1.0.0",
+  "description": "tin_project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "s14990",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "md5": "^2.2.1",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.4.3",
+    "nodemailer": "^5.1.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}

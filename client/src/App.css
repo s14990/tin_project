@@ -1,0 +1,75 @@
+.Main {
+  text-align: center;
+  margin-left: 100px;
+  margin-right: 100px;
+  background: rgb(255, 255, 255);
+}
+
+.buttons{
+  padding: 2px;
+  margin: 2px;
+  border: 1px double white;
+  background-color: #dbf5ff;
+  color: black;
+  text-decoration: none;
+}
+.links{
+  padding: 2px;
+  margin: 2px;
+  border: 1px double white;
+  background-color: #dbf5ff;
+  color: black;
+  text-decoration: none;
+}
+
+
+.top{
+  height: 100px;
+  background-color: #6ed3cf;
+}
+.banner{
+  display: inline;
+}
+.user-login{
+  /*display: inline;*/
+  float: right;
+}
+.navbar{
+  list-style-type: none;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+}
+.navbar-item{
+  margin: 0px;
+  padding: 10px;
+  background: #6ed3cf;
+}
+.navbar-item :hover{
+  background: #68fffa;
+}
+.navbar-item a{
+  text-decoration: none;
+  color: black;
+}
+.navbar-item a :active{
+  text-decoration: none;
+}
+.component{
+  background: #00dd81;
+  height: 100vh;
+}
+
+table{
+  width: 100%;
+}
+th{
+  text-align: center;
+  height: 50px;
+  margin: 0px;
+}
+td{
+  height: 50px;
+  border: 1px solid black
+}
