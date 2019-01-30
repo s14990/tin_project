@@ -9,7 +9,8 @@ class EditOrderComponent extends React.Component {
             order: '',
             status: '',
             med: '',
-            user: ''
+            user: '',
+            number: ''
         };
 
         this.submit_to_update = this.submit_to_update.bind(this);
@@ -20,7 +21,7 @@ class EditOrderComponent extends React.Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         server.get('/order/' + id).then(res => {
-            this.setState({ order: res.data, status: res.data.status });
+            this.setState({ order: res.data, status: res.data.status ,number: res.data.number});
         }).then(() => {
             server.get('/med/' + this.state.order.med).then(res => {
                 this.setState({ med: res.data });
@@ -40,6 +41,9 @@ class EditOrderComponent extends React.Component {
             case 'status':
                 this.setState({ status: value })
                 break;
+            case 'number':
+                this.setState({ number: value })
+                break;  
             default:
                 console.log("Unknown");
                 break;
@@ -47,7 +51,7 @@ class EditOrderComponent extends React.Component {
     }
 
     submit_to_update() {
-        server.put('order/' + this.state.order._id, { status: this.state.status }).then(console.log("Order Updated"));
+        server.put('order/' + this.state.order._id, { status: this.state.status,number: this.state.number }).then(console.log("Order Updated"));
         setTimeout(this.timed_update, 300);
     }
 
@@ -65,6 +69,8 @@ class EditOrderComponent extends React.Component {
                 <form className="Order_Edit_Form">
                     <label htmlFor="status">Status</label>
                     <input type="text" className="field" name="status" value={this.state.status} onChange={this.handleInputChange} />
+                    <label htmlFor="number">Number</label>
+                    <input type="number" className="field" name="number" value={this.state.number} onChange={this.handleInputChange} />
                     <button className="buttons" type="button" onClick={this.submit_to_update}>Update</button>
                 </form>
             </div>

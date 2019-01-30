@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//const Medicine = require('../models/medicine.js');
-
 const orderSchema = new Schema({
     med: {
         type: Schema.Types.ObjectId,
@@ -16,7 +14,8 @@ const orderSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    number: Number
 });
 
 module.exports = user = mongoose.model('Order', orderSchema);

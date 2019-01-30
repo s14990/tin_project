@@ -23,8 +23,8 @@ class AddOrderComponent extends React.Component {
         server.get('/med/').then(res => {
             this.setState({ meds: res.data });
         });
-        this.setState({user_id: user});
-        
+        this.setState({ user_id: user });
+
     }
 
     handleInputChange(event) {
@@ -34,7 +34,13 @@ class AddOrderComponent extends React.Component {
         switch (name) {
             case 'med':
                 this.setState({ med: value });
-                break;  
+                break;
+            case 'status':
+                this.setState({ status: value })
+                break;
+            case 'number':
+                this.setState({ number: value })
+                break;
             default:
                 console.log("Unknown");
                 break;
@@ -42,7 +48,7 @@ class AddOrderComponent extends React.Component {
     }
 
     submit_to_create() {
-        server.post('/order/add', { med: this.state.med,user:this.state.user_id,status: "Created"})
+        server.post('/order/add', { med: this.state.med, user: this.state.user_id, status: this.state.status,number: this.state.number })
             .then(res => { this.setState({ Order: res.data }) }).then(() => {
                 if (!!this.state.Order) {
                     console.log("new Order created");
@@ -65,11 +71,15 @@ class AddOrderComponent extends React.Component {
                     <div>
                         <label htmlFor="med">Medicine</label>
                         <select name="med" value={this.state.med} onChange={this.handleInputChange}>
-                        <option value="" disabled></option>
-                        {this.state.meds.map(med =>
-                            <option key={med._id} value={med._id} >{med.med_name}</option>
-                        )}
+                            <option value="" disabled></option>
+                            {this.state.meds.map(med =>
+                                <option key={med._id} value={med._id} >{med.med_name}</option>
+                            )}
                         </select>
+                        <label htmlFor="status">Status</label>
+                        <input type="text" className="field" name="status" value={this.state.status} onChange={this.handleInputChange} />
+                        <label htmlFor="number">Number</label>
+                        <input type="number" className="field" name="number" value={this.state.number} onChange={this.handleInputChange} />
                     </div>
                     {this.state.err.length > 0 && <p className="Error">{this.state.err}</p>}
                     <button className="buttons" type="button" onClick={this.submit_to_create} disabled={this.state.disabled}>Create New Order</button>

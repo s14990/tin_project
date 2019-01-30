@@ -79,7 +79,7 @@ class AddStorageComponent extends React.Component {
                         <input type="number" className="field" name="number" value={this.state.number} onChange={this.handleInputChange} />
                     </div>
                     {this.state.err.length > 0 && <p className="Error">{this.state.err}</p>}
-                    <button className="buttons" type="button" onClick={this.submit_to_create} disabled={this.state.disabled}>Create New Order</button>
+                    <button className="buttons" type="button" onClick={this.submit_to_create} disabled={this.state.disabled}>Create New Storage</button>
                 </form>
             </div>
         );

@@ -73,8 +73,8 @@ const seed = async function () {
   const med2= await db.Medicine.findOne({ med_name: 'Med2' });
   const user2 = await db.User.findOne({ username: 'testuser1' });
   const orders = [
-    { med: med1, user: user2,status:"Waiting"},
-    { med: med2, user: user2,status:"Completed"}
+    { med: med1, user: user2,status:"Waiting",number: 3},
+    { med: med2, user: user2,status:"Completed",number: 2}
   ]
   orders.map(async function (order) {
     const neworder = await db.Order.create(order);

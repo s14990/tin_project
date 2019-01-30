@@ -1,7 +1,6 @@
 const mongoose= require('mongoose');
 
 mongoose.set('debug',true)
-mongoose.Promise=global.Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/tin',{ useNewUrlParser: true })
 console.log("connected to database");
 
@@ -11,4 +10,4 @@ module.exports.Medicine = require('./medicine');
 module.exports.Receipt = require('./receipt');
 module.exports.Order= require('./order');
 module.exports.Storage=require('./storage');
-module.exports.Price=require('./price')
+module.exports.Price=require('./price');

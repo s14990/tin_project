@@ -36,6 +36,10 @@ router.put('/:id', async function (req, res) {
 router.delete('/:id', async function (req, res) {
     try {
         await db.Medicine.findByIdAndDelete(req.params.id);
+        await db.Receipt.find({med: req.params.id}).remove();
+        await db.Order.find({med: req.params.id}).remove();
+        await db.Price.find({med: req.params.id}).remove();
+        await db.Storage.find({med: req.params.id}).remove();
         return res.status(202).json({ "msg": "med deleted" });
 
     } catch (err) {

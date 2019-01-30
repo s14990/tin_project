@@ -79,6 +79,7 @@ class OrderComponent extends React.Component {
                                 <th>User</th>
                                 <th>Medicine</th>
                                 <th>Status</th>
+                                <th>Number</th>
                                 <th>Time</th>  
                                 <th>Delete</th>
                                 <th>Update</th>
@@ -90,6 +91,7 @@ class OrderComponent extends React.Component {
                                     <td>{this.get_User_Name(order.user)}</td>
                                     <td>{this.get_Med_Name(order.med)}</td>
                                     <td>{order.status}</td>
+                                    <td>{order.number}</td>
                                     <td>{order.date}</td>
                                     <td><button className="buttons" onClick={this.handleDelete.bind(this, order._id)}>Delete</button></td>
                                     <td><Link className="links" to={'order/' + order._id}>Update Order</Link></td>
@@ -109,6 +111,7 @@ class OrderComponent extends React.Component {
                             <tr>
                                 <th>Medicine</th>
                                 <th>Status</th>
+                                <th>Number</th>
                                 <th>Time</th>
                                 <th>Update</th>
                             </tr>
@@ -118,6 +121,7 @@ class OrderComponent extends React.Component {
                                 <tr key={order._id}>
                                     <td>{this.get_Med_Name(order.med)}</td>
                                     <td>{order.status}</td>
+                                    <td>{order.number}</td>
                                     <td>{order.date}</td>
                                     <td><Link className="links" to={'order/' + order._id}>Update Order</Link></td>
                                 </tr>

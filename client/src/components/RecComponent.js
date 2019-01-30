@@ -66,33 +66,43 @@ class RecComponent extends React.Component {
 
     render() {
 
-        return (
-            <div className="component">
-                <table className='showtable'>
-                    <thead>
-                        <tr>
-                            <th>Medicine</th>
-                            <th>ingredient</th>
-                            <th>Mass</th>
-                            {this.props.user_rank === "admin" && <th>Delete</th>}
-                            {this.props.user_rank === "admin" && <th>Update</th>}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.recs.map(rec =>
-                            <tr key={rec._id}>
-                                <td>{this.get_Med_Name(rec.med)}</td>
-                                <td>{this.get_Ingr_Name(rec.ingr)}</td>
-                                <td>{rec.mass}</td>
-                                {this.props.user_rank === "admin" && <td><button className="buttons" onClick={this.handleDelete.bind(this, rec._id)}>Delete</button></td>}
-                                {this.props.user_rank === "admin" && <td><Link className="links" to={'rec/' + rec._id}>Update Receipt</Link></td>}
+        if (this.props.user_rank === "admin" || this.props.user_rank === "user") {
+            return (
+                <div className="component">
+                    <table className='showtable'>
+                        <thead>
+                            <tr>
+                                <th>Medicine</th>
+                                <th>ingredient</th>
+                                <th>Mass</th>
+                                {this.props.user_rank === "admin" && <th>Delete</th>}
+                                {this.props.user_rank === "admin" && <th>Update</th>}
                             </tr>
-                        )}
-                    </tbody>
-                </table>
-                {this.props.user_rank === "admin" && <Link className="links" to={'rec_add'}>Add_receipt</Link>}
-            </div>
-        );
+                        </thead>
+                        <tbody>
+                            {this.state.recs.map(rec =>
+                                <tr key={rec._id}>
+                                    <td>{this.get_Med_Name(rec.med)}</td>
+                                    <td>{this.get_Ingr_Name(rec.ingr)}</td>
+                                    <td>{rec.mass}</td>
+                                    {this.props.user_rank === "admin" && <td><button className="buttons" onClick={this.handleDelete.bind(this, rec._id)}>Delete</button></td>}
+                                    {this.props.user_rank === "admin" && <td><Link className="links" to={'rec/' + rec._id}>Update Receipt</Link></td>}
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                    {this.props.user_rank === "admin" && <Link className="links" to={'rec_add'}>Add_receipt</Link>}
+                </div>
+            );
+        }
+        else
+            return (
+                <div className="component">
+                    <p>User Should be loged in to view this</p>
+                </div>
+            );
+
+
     }
 }
 

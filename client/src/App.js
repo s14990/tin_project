@@ -48,8 +48,10 @@ class App extends Component {
       this.setState({ user: user, user_id: user._id, user_name: user.username, user_loged_in: true, user_rank: user.rank });
       console.log("user loged in");
     }
-    else
+    else{
       console.log("fail log in");
+      this.setState({user_name: "Login Failed"});
+    }
   }
 
   handle_logout() {

@@ -36,6 +36,7 @@ router.put('/:id', async function (req, res) {
     try {
         const order = await db.Order.findById(req.params.id);
         order.status = req.body.status;
+        order.number=req.body.number;
         await order.save();
         return res.status(202).json({ "msg": "order updated" });
     } catch (err) {

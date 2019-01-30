@@ -73,7 +73,8 @@ class MedComponent extends React.Component {
                             <tr key={med._id}>
                                 <td>{med.med_name}</td>
                                 <td>{this.get_Med_Price(med._id)}</td>
-                                <td><Link className="links" to={'med_show/' + med._id}>Show_Medicine</Link></td>
+                                {this.props.user_rank === "none" && <td>Not Autorized</td>}
+                                {(this.props.user_rank === "admin" || this.props.user_rank === "user") && <td><Link className="links" to={'med_show/' + med._id}>Show_Medicine</Link></td>}
                                 {this.props.user_rank === "admin" && <td><button className="buttons" onClick={this.handleDelete.bind(this, med._id)}>Delete</button></td>}
                                 {this.props.user_rank === "admin" && <td><Link className="links" to={'med/' + med._id}>Edit_Medicine</Link></td>}
                             </tr>

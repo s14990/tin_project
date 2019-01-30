@@ -11,7 +11,9 @@ class RegisterComponent extends React.Component {
             password: '',
             email: '',
             err: '',
-            disabled: true
+            disabled: true,
+            user: '',
+            error: ''
         };
 
         this.submit_to_register = this.submit_to_register.bind(this);
@@ -38,7 +40,7 @@ class RegisterComponent extends React.Component {
                 break;
             case 'password':
                 this.setState({ password: value })
-                if (validator.isAlphanumeric(value)) {
+                if (validator.isAlphanumeric(value) && value.length > 4) {
                     this.setState({ err: '', disabled: false })
                 }
                 else
@@ -60,8 +62,16 @@ class RegisterComponent extends React.Component {
 
     submit_to_register() {
         server.post('/user/register', { username: this.state.username, password: this.state.password, email: this.state.email })
-            .then(res => { console.log("Registered user" + res.data.username) });
-        setTimeout(this.timed_update, 300);
+            .then((res) => {
+                this.setState({ user: res.data })
+                if (!!this.state.user.username) {
+                    console.log("new User Registered");
+                    setTimeout(this.timed_update, 300);
+                    this.setState({ error: '' });
+                }
+            }).catch(error=>{
+                this.setState({error: error.response});
+            });;
     }
 
     timed_update() {
@@ -86,6 +96,7 @@ class RegisterComponent extends React.Component {
                     </div>
                     {this.state.disabled && <p className="Error">{this.state.err}</p>}
                     <button className="buttons" type="button" onClick={this.submit_to_register} disabled={this.state.disabled}>Register</button>
+                    {!!this.state.error > 0 && <p>{this.state.error.data.error}</p>}
                 </form>
             </div>
         );

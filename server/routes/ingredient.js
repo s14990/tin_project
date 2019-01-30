@@ -36,6 +36,7 @@ router.put('/:id', async function (req, res) {
 router.delete('/:id', async function (req, res) {
     try {
         await db.Ingredient.findByIdAndDelete(req.params.id);
+        await db.Receipt.find({ingr: req.params.id}).remove();
         return res.status(202).json({ "msg": "ingr deleted" });
 
     } catch (err) {
