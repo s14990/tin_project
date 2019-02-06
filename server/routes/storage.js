@@ -35,6 +35,7 @@ router.put('/:id', async function (req, res) {
         const str = await db.Storage.findById(req.params.id);
         str.number=req.body.number;
         str.status= req.body.status;
+        str.med=req.body.med;
         await str.save();
         return res.status(202).json({ "msg": "str updated" });
     } catch (err) {

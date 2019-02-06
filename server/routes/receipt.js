@@ -36,6 +36,8 @@ router.put('/:id', async function (req, res) {
     try {
         const rec = await db.Receipt.findById(req.params.id);
         rec.mass = req.body.mass;
+        rec.med = req.body.med;
+        rec.ingr=req.body.ingr;
         await rec.save();
         return res.status(202).json({ "msg": "rec updated" });
     } catch (err) {

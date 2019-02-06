@@ -10,7 +10,8 @@ class EditOrderComponent extends React.Component {
             status: '',
             med: '',
             user: '',
-            number: ''
+            number: '',
+            meds: []
         };
 
         this.submit_to_update = this.submit_to_update.bind(this);
@@ -21,7 +22,7 @@ class EditOrderComponent extends React.Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         server.get('/order/' + id).then(res => {
-            this.setState({ order: res.data, status: res.data.status ,number: res.data.number});
+            this.setState({ order: res.data, status: res.data.status, number: res.data.number });
         }).then(() => {
             server.get('/med/' + this.state.order.med).then(res => {
                 this.setState({ med: res.data });
@@ -31,6 +32,10 @@ class EditOrderComponent extends React.Component {
             });
         });
 
+        server.get('/med/').then(res => {
+            this.setState({ meds: res.data });
+        });
+
     }
 
     handleInputChange(event) {
@@ -38,12 +43,15 @@ class EditOrderComponent extends React.Component {
         let name = target.name;
         let value = target.value;
         switch (name) {
+            case 'med':
+                this.setState({ med: value });
+                break;
             case 'status':
                 this.setState({ status: value })
                 break;
             case 'number':
                 this.setState({ number: value })
-                break;  
+                break;
             default:
                 console.log("Unknown");
                 break;
@@ -51,7 +59,7 @@ class EditOrderComponent extends React.Component {
     }
 
     submit_to_update() {
-        server.put('order/' + this.state.order._id, { status: this.state.status,number: this.state.number }).then(console.log("Order Updated"));
+        server.put('order/' + this.state.order._id, { status: this.state.status, number: this.state.number, med: this.state.med }).then(console.log("Order Updated"));
         setTimeout(this.timed_update, 300);
     }
 
@@ -64,7 +72,11 @@ class EditOrderComponent extends React.Component {
             <div className="component">
                 <div>
                     <p>User: {this.state.user.username}</p>
-                    <p>Medicine:  {this.state.med.med_name}</p>
+                    <p><select name="med" value={this.state.med} onChange={this.handleInputChange}>
+                        {this.state.meds.map(med =>
+                            <option key={med._id} value={med._id} >{med.med_name}</option>
+                        )}
+                    </select></p>
                 </div>
                 <form className="Order_Edit_Form">
                     <label htmlFor="status">Status</label>

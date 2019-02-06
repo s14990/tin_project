@@ -28,10 +28,15 @@ router.get('/', async function (req, res) {
 
 router.post('/register', async function (req, res) {
     try {
-        if (req.body.email.length < 1)
-            throw new Error('Empty Email');
         if (req.body.username.length < 1)
             throw new Error('Empty username');
+        if (req.body.password.length < 1)
+            throw new Error('Empty password');
+        if (req.body.email.length < 1)
+            throw new Error('Empty Email');
+        const user1 = await db.User.findOne({ username: req.body.username });
+        if (!!user1)
+            throw new Error('Username was already taken');
         const user = await db.User.create(req.body);
         user.password = md5(user.password);
         await user.save();
@@ -56,6 +61,8 @@ router.post('/register', async function (req, res) {
 router.post('/login', async function (req, res) {
     try {
         const user = await db.User.findOne({ username: req.body.username });
+        if (!user)
+            throw new Error('No user was found');
         if (user.password !== md5(req.body.password))
             throw new Error('wrong password');
         if (user.isvalidated === false)
@@ -106,7 +113,7 @@ router.get('/:_id', async function (req, res) {
 router.delete('/:_id', async function (req, res) {
     try {
         const user = await db.User.deleteOne({ _id: req.params._id });
-        await db.Order.find({user: req.params._id}).remove();
+        await db.Order.find({ user: req.params._id }).remove();
         const { id, username, password } = user;
         return res.status(201).json({ id, username, password });
     } catch (err) {

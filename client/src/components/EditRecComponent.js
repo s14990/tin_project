@@ -7,10 +7,12 @@ class EditRecComponent extends React.Component {
         super(props);
         this.state = {
             id: '',
-            ingr_name: '',
-            med_name: '',
+            ingr: '',
+            med: '',
             mass: '',
-            rec: ''
+            rec: '',
+            meds: [],
+            ingrs: []
         };
 
         this.submit_to_update = this.submit_to_update.bind(this);
@@ -21,14 +23,23 @@ class EditRecComponent extends React.Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         server.get('/rec/' + id).then(res => {
-            this.setState({rec: res.data, mass: res.data.mass });
-        }).then(() => {
+            this.setState({ rec: res.data, mass: res.data.mass, med: res.data.med, ingr: res.data.ingr });
+        });
+
+        /*.then(() => {
             server.get('/med/' + this.state.rec.med).then(res => {
                 this.setState({ med_name: res.data.med_name });
             });
             server.get('/ingr/' + this.state.rec.ingr).then(res => {
                 this.setState({ ingr_name: res.data.ingr_name });
             });
+        });
+        */
+        server.get('/med/').then(res => {
+            this.setState({ meds: res.data });
+        });
+        server.get('/ingr/').then(res => {
+            this.setState({ ingrs: res.data });
         });
 
     }
@@ -38,6 +49,12 @@ class EditRecComponent extends React.Component {
         let name = target.name;
         let value = target.value;
         switch (name) {
+            case 'med':
+                this.setState({ med: value });
+                break;
+            case 'ingr':
+                this.setState({ ingr: value });
+                break;
             case 'mass':
                 this.setState({ mass: value })
                 break;
@@ -48,7 +65,7 @@ class EditRecComponent extends React.Component {
     }
 
     submit_to_update() {
-        server.put('rec/' + this.state.rec._id, { mass: this.state.mass }).then(console.log("Receipt Updated"));
+        server.put('rec/' + this.state.rec._id, { mass: this.state.mass, med: this.state.med, ingr: this.state.ingr }).then(console.log("Receipt Updated"));
         setTimeout(this.timed_update, 300);
     }
 
@@ -60,8 +77,18 @@ class EditRecComponent extends React.Component {
         return (
             <div className="component">
                 <div>
-                    <p>Medicine:  {this.state.med_name}</p>
-                    <p>Ingredint: {this.state.ingr_name}</p>
+                    <label htmlFor="med">Medicine</label>
+                    <select name="med" value={this.state.med} onChange={this.handleInputChange}>
+                        {this.state.meds.map(med =>
+                            <option key={med._id} value={med._id} >{med.med_name}</option>
+                        )}
+                    </select>
+                    <label htmlFor="ingr">Ingredient</label>
+                    <select name="ingr" value={this.state.ingr} onChange={this.handleInputChange}>
+                        {this.state.ingrs.map(ingr =>
+                            <option key={ingr._id} value={ingr._id} >{ingr.ingr_name}</option>
+                        )}
+                    </select>
                 </div>
                 <form className="Rec_Edit_Form">
                     <label htmlFor="mass">Mass</label>

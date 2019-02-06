@@ -19,7 +19,7 @@ class EditIngrComponent extends React.Component {
         const id = this.props.match.params.id;
         this.setState({ _id: id });
         server.get('/ingr/' + id).then(res => {
-            this.setState({ ingr_name: res.data.Ingr_name });
+            this.setState({ ingr_name: res.data.ingr_name });
         });
     }
 
@@ -54,7 +54,7 @@ class EditIngrComponent extends React.Component {
                 </div>
                 <form className="Ingr_Edit_Form">
                     <label htmlFor="name">Name</label>
-                    <input type="text" className="field" name="name" value={this.state.Ingr_name} onChange={this.handleInputChange} />
+                    <input type="text" className="field" name="name" value={this.state.ingr_name} onChange={this.handleInputChange} />
                     <button className="buttons" type="button" onClick={this.submit_to_update}>Update</button>
                 </form>
             </div>
